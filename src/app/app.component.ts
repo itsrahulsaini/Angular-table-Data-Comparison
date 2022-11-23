@@ -136,6 +136,17 @@ export class AppComponent implements OnInit, OnDestroy {
     //   statusInCountry: 'sdfsdf',
     // },
   ];
+  indexChange: any = [
+    { x: 1, y: 2 },
+    { x: 2, y: 4 },
+    { x: 3, y: 2 },
+    { x: 4, y: 2 },
+    { x: 5, y: 2 },
+    { x: 6, y: 2 },
+    { x: 7, y: 2 },
+    { x: 8, y: 2 },
+    { x: 9, y: 2 },
+  ];
   sortedAddressData: any;
   validDataFlag: boolean = false;
   filterAddressGap = [];
@@ -161,46 +172,6 @@ export class AppComponent implements OnInit, OnDestroy {
     return this.sortedAddressData;
   }
 
-  // validateAddressData() {
-  //   debugger;
-  //   let errorData = [];
-
-  //   for (let i = 0; i < this.personalHistory.length; i++) {
-  //     this.personlHistorySortByASC(this.personalHistory[i]);
-  //     // for (let j = 0; j < this.sortedAddressData.length; j++) {
-  //     // if (
-  //     //   new Date(this.personalHistory[i].fromDate) <=
-  //     //     new Date(this.addressHistory[j].fromDate) &&
-  //     //   new Date(this.personalHistory[i].tillDate) >=
-  //     //     new Date(this.addressHistory[j].tillDate) &&
-  //     //   this.personalHistory[i].country.toLowerCase() !=
-  //     //     this.addressHistory[j].country.toLowerCase()
-  //     // ) {
-  //     //   errorData.push(this.addressHistory[j]);
-  //     //   console.log(errorData);
-  //     //   alert('Done');
-  //     // }
-  //     let data = this.sortedAddressData.filter(
-  //       (x) =>
-  //         new Date(this.personalHistory[i].fromDate) >= new Date(x.fromDate) &&
-  //         new Date(this.personalHistory[i].tillDate) <= new Date(x.tillDate)
-  //     );
-  //     console.log(data);
-
-  //     //  else if (
-  //     //   this.personalHistory[i].fromDate >= this.addressHistory[j].fromDate &&
-  //     //   this.personalHistory[i].tillDate <= this.addressHistory[j].tillDate &&
-  //     //   this.personalHistory[i].country == this.addressHistory[j].country
-  //     // ) {
-  //     //   alert('Done');
-  //     // }
-  //     // else {
-  //     //   alert('Done');
-  //     //   // break
-  //     // }
-  //     // }
-  //   }
-  // }
   validateAddressData() {
     debugger;
     for (let i = 0; i < this.personalHistory.length; i++) {
@@ -321,7 +292,6 @@ export class AppComponent implements OnInit, OnDestroy {
     debugger;
 
     let c = 'dfgdfg        ';
-    alert(c.trim());
     let x = JSON.parse(JSON.stringify(data1).replace(/"\s+|\s+"/g, '"'));
     let y = JSON.parse(JSON.stringify(data2).replace(/"\s+|\s+"/g, '"'));
     let result = this.CompareData(x, y);
@@ -345,5 +315,69 @@ export class AppComponent implements OnInit, OnDestroy {
     for (p in y) if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false;
 
     return true;
+  }
+
+  public toggleSelection(item, i) {
+    debugger;
+    item.selected = !item.selected;
+    if (item.selected == true) {
+      item.index = i;
+    } else {
+      item.index = null;
+    }
+  }
+  up() {
+    debugger;
+    this.indexChange.forEach((item) => {
+      if (item.selected) {
+        if (item.index - 1 != -1) {
+          this.indexChange.splice(item.index, 1);
+          this.indexChange.splice(item.index - 1, 0, item);
+          item.selected = !item.selected;
+        }
+      }
+    });
+  }
+  down() {
+    debugger;
+    this.indexChange.forEach((item) => {
+      if (item.selected) {
+        if (!(this.indexChange.length - 1) < item.index + 1) {
+          this.indexChange.splice(item.index, 1);
+          this.indexChange.splice(item.index + 1, 0, item);
+          item.selected = !item.selected;
+        }
+      }
+    });
+  }
+  moveTop() {
+    let number = 0;
+    this.indexChange.forEach((item) => {
+      if (item.selected) {
+        this.indexChange.splice(item.index, 1);
+        this.indexChange.splice(number, 0, item);
+        item.selected = !item.selected;
+        number++;
+      }
+    });
+  }
+  moveDown() {
+    debugger;
+    // let number = this.indexChange.length;
+    // this.indexChange.forEach((item) => {
+    //   if (item.selected) {
+    //     this.indexChange.splice(item.index, 1);
+    //     this.indexChange.splice(number, 0, item);
+    //     item.selected = !item.selected;
+    //     number--;
+    //   }
+    // });
+    for (let i = this.indexChange.length - 1; i >= 0; i--) {
+      if (this.indexChange[i].selected) {
+        this.indexChange.splice(this.indexChange[i].index, 1);
+        this.indexChange.splice(i, 0, this.indexChange[i]);
+        this.indexChange[i].selected = !this.indexChange[i].selected;
+      }
+    }
   }
 }

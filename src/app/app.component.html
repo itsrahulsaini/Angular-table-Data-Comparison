@@ -54,4 +54,18 @@
 </mat-table>
 <input type="submit" (click)="validateAddressData()" />
 
-<input type="text" [value]="xyz.value" />
+<!-- <input type="text" [value]="xyz.value" /> <-->
+<ul>
+  <li
+    *ngFor="let item of indexChange; let i = index"
+    (click)="toggleSelection(item, i)"
+    [class.zxczx]="item.selected"
+  >
+    {{ item.x }}
+  </li>
+</ul>
+
+<button (click)="up()">Shift Up</button>
+<button (click)="down()">Shift Down</button>
+<button (click)="moveTop()">MoveTop</button>
+<button (click)="moveDown()">MoveDown</button>
