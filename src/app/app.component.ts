@@ -363,21 +363,22 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   moveDown() {
     debugger;
-    // let number = this.indexChange.length;
-    // this.indexChange.forEach((item) => {
-    //   if (item.selected) {
-    //     this.indexChange.splice(item.index, 1);
-    //     this.indexChange.splice(number, 0, item);
-    //     item.selected = !item.selected;
+    let number = this.indexChange.length - 1;
+    this.indexChange.slice().reverse().forEach((item) => {
+      if (item.selected) {
+        this.indexChange.splice(item.index, 1);
+        this.indexChange.splice(number, 0, item);
+        item.selected = !item.selected;
+        number--;
+      }
+    });
+    // for (let i = 0; i < this.indexChange.length; i--) {
+    //   if (this.indexChange[i].selected) {
+    //     this.indexChange.splice(this.indexChange[i].index, 1);
+    //     this.indexChange.splice(number, 0, this.indexChange[i]);
+    //     this.indexChange[i].selected = !this.indexChange[i].selected;
     //     number--;
     //   }
-    // });
-    for (let i = this.indexChange.length - 1; i >= 0; i--) {
-      if (this.indexChange[i].selected) {
-        this.indexChange.splice(this.indexChange[i].index, 1);
-        this.indexChange.splice(i, 0, this.indexChange[i]);
-        this.indexChange[i].selected = !this.indexChange[i].selected;
-      }
-    }
+    // }
   }
 }
