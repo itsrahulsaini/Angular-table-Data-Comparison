@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
       x: 2,
     },
     {
-      fromDate: new Date('2002-01-01'),
+      fromDate: new Date('2002-02-01'),
       tillDate: new Date('2002-12-31'),
       address: 'sdfsd',
       city: 'Narayangarh',
@@ -364,14 +364,17 @@ export class AppComponent implements OnInit, OnDestroy {
   moveDown() {
     debugger;
     let number = this.indexChange.length - 1;
-    this.indexChange.slice().reverse().forEach((item) => {
-      if (item.selected) {
-        this.indexChange.splice(item.index, 1);
-        this.indexChange.splice(number, 0, item);
-        item.selected = !item.selected;
-        number--;
-      }
-    });
+    this.indexChange
+      .slice()
+      .reverse()
+      .forEach((item) => {
+        if (item.selected) {
+          this.indexChange.splice(item.index, 1);
+          this.indexChange.splice(number, 0, item);
+          item.selected = !item.selected;
+          number--;
+        }
+      });
     // for (let i = 0; i < this.indexChange.length; i--) {
     //   if (this.indexChange[i].selected) {
     //     this.indexChange.splice(this.indexChange[i].index, 1);
